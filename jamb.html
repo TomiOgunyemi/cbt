@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="jquery-3.5.1.min.js"></script>
+  
+</head>
+<body>
+  
+    <div id="divv" class="shadow p-4">
+        <h2 id="loader" class="text-center"><i  class="spinner-border  spinner-border-lg"></i>  loading...</h2>
+        <div id="quest" class="pt-3"></div>
+         <div id="buttonbuttom">
+            <button class="btn btn-danger" onclick="previous()" id="prev_v">Previous</button>
+            <button  class="btn btn-warning" onclick="submit()">Submit</button>
+            <button class="btn btn-success" onclick="next()" id="next_t" > Next</button>
+        </div>
+        <h3 id="display_result"></h3>
+    </div>
+  
+
+      <script>
+    var questions =[{
+    question: "What is the name of the president?",
+    option:['Tinubu','Obj','Jonathan','Buhari'],
+    answer: "Buhari",
+    chosen_answer:""
+},{
+    question: "Who is the world best footballer?",
+    option:['Christiano Ronaldo','Messi','Neymar','Mbappe'],
+    answer: "Christiano Ronaldo",
+    chosen_answer:""
+},{
+    question: "Who is the greatest footballer?",
+    option:['Christiano Ronaldo','Messi','Ronaldo','Pepe'],
+    answer: "Messi",
+    chosen_answer:""
+},{
+    question: "Where is Ibadan?",
+    option:['Nigeria','Niger','USA','UK'],
+    answer: "Nigeria",
+    chosen_answer:""
+},{
+    question: "Who is Tomi's best friend?",
+    option:['Samuel','Eunice','Olawale','Oking'],
+    answer: "Eunice",
+    chosen_answer:""
+},{
+    question: "Who is the Governor of lagos?",
+    option:['Makinde','Sanwo Olu','Ambode','Abiodun'],
+    answer: "Sanwo Olu",
+    chosen_answer:""
+},{
+    question: "Which is the largest black country in terms of population?",
+    option:['Jamaica','Nigeria','Mauritania','Benin'],
+    answer: "Nigeria",
+    chosen_answer:""
+},{
+    question: "Who composed National Anthem?",
+    option:['Taiwo Akinkunmi','Samuel Henshaw','Ojo Eniola','Tolu Ajao'],
+    answer: "Nigeria",
+    chosen_answer:""
+},{
+    question: "Who is the giant of Africa?",
+    option:['Jamaica','Nigeria','Mauritania','Benin'],
+    answer: "Nigeria",
+    chosen_answer:""
+},{
+    question: "Who gave birth to Jesus?",
+    option:['Tomi Coker','Dami Allen','Virgin Mary','Yemi Osinbajo'],
+    answer: "Nigeria",
+    chosen_answer:""
+},]
+
+var index=0;
+var ch;
+
+function show(){ 
+    if (!questions[index]) {
+        return
+    }
+
+    document.getElementById("quest").innerHTML= `<h3>${index+1}.${questions[index].question}</h3>`;
+
+    questions[index].option.forEach(function (element) {
+     document.getElementById("quest").innerHTML  += `<p><input type='radio' value="${element}"> ${element}</p>`
+    });
+ 
+    ch = document.querySelectorAll("input[type='radio']");
+
+    ch.forEach(function(params) {
+        params.addEventListener("click", check)
+        if(params.value==questions[index].chosen_answer){
+            params.checked= true;
+        }
+    });
+}
+// show()
+        setInterval(function(){
+                show(); loader.hidden=true}, 3000)
+ 
+   function check(element) {
+        ch.forEach(function(checks) {
+            checks.checked = false;
+        })
+    element.target.checked=true;
+    questions[index].chosen_answer=element.target.value
+}
+
+function previous() {
+    setInterval()
+    index--;
+    show()
+
+    if (index != questions.length-1) {
+       document.getElementById("prev_v").removeAttribute('disabled')
+    }
+    if(index == questions.length-1){
+        document.getElementById('next_t').setAttribute('disabled', true)
+    }
+
+}
+function next() {
+    index++;
+    show()
+   
+    if (index==1) {
+        
+    }
+    
+}
+                                                       // ONE METHOD FOR SUMMATION
+    function submit(){
+        var score= questions.filter(function (ques) {
+            return ques.answer==ques.chosen_answer;
+        })
+    document.getElementById("display_result").innerHTML= `"You got ${score.length} out of ${questions.length}"`
+
+                                                               // ANOTHER METHOD
+    // function submit(){
+    // questions.forEach(function(ques){
+    //     if (ques.answer== ques.chosen_answer) {
+    //        score++; 
+    //     }
+    // })
+    // document.getElementById("display_result").innerHTML= `"You got ${score.length} out of ${questions.length}"`
+    //     score= 0
+    // }
+
+    // ANOTHER METHOD
+
+   function submit(){
+       var score=0
+        for (var index = 0; index < questions.length; index++) {
+            if (questions[index].chosen_answer==questions[index].answer) {
+                score++
+            }
+        }
+        document.getElementById("display_result").innerHTML= `You got ${score} out of ${questions.length} questions`
+    
+   }
+    }
+ </script>  
+    
+    <script src="bootstrap/js/popper.min.js"></script>
+    <script src="bootstrap/js/jquery.min.js"></script>
+    <script src="bootstrap/dist//js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
